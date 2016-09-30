@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0.7",
+
+  "dependencies": {
+    "FluentMigrator": "1.6.2",
+    "Newtonsoft.Json": "9.0.1",
+    "NHibernate": "4.0.4.4000"
+  },
+
+  "frameworks": {
+    "net461": {
+      "frameworkAssemblies": {
+        "System.Data": "4.0.0.0"
+      }
+    }
+  }
+}
