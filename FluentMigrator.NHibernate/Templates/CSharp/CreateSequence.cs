@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using FluentMigrator.Model;
 namespace FluentMigrator.NHibernate.Templates.CSharp
-{    public class CreateSequenceExpressionTemplate
+{    internal class CreateSequenceExpressionTemplate
         : ExpressionTemplate<FluentMigrator.Expressions.CreateSequenceExpression>
     {
         public override void WriteTo(TextWriter tw)

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using FluentMigrator.Expressions;
-using FluentMigrator.NHibernate.Templates;
 using FluentMigrator.NHibernate.Templates.CSharp;
 
-namespace FluentMigrator.NHibernate
+namespace FluentMigrator.NHibernate.Templates
 {
-    public class TemplateFromExpressionFactory : ITemplateFromExpressionFactory
+    internal class CSharpTemplateFromExpressionFactory : ITemplateFromExpressionFactory
     {
         private Dictionary<Type, Func<MigrationExpressionBase, ITemplate>> _templateLookup = InitTemplates();
 

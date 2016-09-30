@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using FluentMigrator.Model;
 namespace FluentMigrator.NHibernate.Templates.CSharp
-{    public class CreateConstraintExpressionTemplate
+{    internal class CreateConstraintExpressionTemplate
         : ExpressionTemplate<FluentMigrator.Expressions.CreateConstraintExpression>
     {
         public override void WriteTo(TextWriter tw)

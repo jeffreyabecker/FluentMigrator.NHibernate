@@ -2,7 +2,8 @@ using System;
 using System.IO;
 using FluentMigrator.Model;
 namespace FluentMigrator.NHibernate.Templates.CSharp
-{    public class AlterColumnExpressionTemplate
+{
+    internal class AlterColumnExpressionTemplate
         : ExpressionTemplate<FluentMigrator.Expressions.AlterColumnExpression>
     {
         public override void WriteTo(TextWriter tw)

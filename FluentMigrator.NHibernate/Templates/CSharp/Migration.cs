@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
 
 
 
-    public  class Migration : ITemplate
+    internal  class Migration : ITemplate
     {
 
         public virtual string Namespace { get; set; }
@@ -52,7 +52,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
             tw.Write("\t[Migration({0:00000000})]",Version);
             tw.WriteLine();
 
-            tw.WriteLine("\tpublic class "+Name+" : Migration");
+            tw.WriteLine("\tinternal class "+Name+" : Migration");
             tw.WriteLine("\t{");
             tw.WriteLine();
             tw.Write("\tpublic const string ConfigurationData = \"");

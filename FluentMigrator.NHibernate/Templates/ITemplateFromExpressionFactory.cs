@@ -1,8 +1,8 @@
 using FluentMigrator.Expressions;
 
-namespace FluentMigrator.NHibernate
+namespace FluentMigrator.NHibernate.Templates
 {
-    public interface ITemplateFromExpressionFactory
+    internal interface ITemplateFromExpressionFactory
     {
         ITemplate GetTemplate(MigrationExpressionBase expr);
     }

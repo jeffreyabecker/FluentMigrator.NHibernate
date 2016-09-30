@@ -5,7 +5,7 @@ using FluentMigrator.Model;
 
 namespace FluentMigrator.NHibernate.Templates.CSharp
 {
-    public class ColumnDefinitionTemplate
+    internal class ColumnDefinitionTemplate
         : ExpressionTemplate<ColumnDefinition>
     {
         public override void WriteTo(TextWriter tw)

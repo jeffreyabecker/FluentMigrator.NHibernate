@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using FluentMigrator.Model;
 namespace FluentMigrator.NHibernate.Templates.CSharp
-{    public class CreateIndexExpressionTemplate
+{    internal class CreateIndexExpressionTemplate
         : ExpressionTemplate<FluentMigrator.Expressions.CreateIndexExpression>
     {
         public override void WriteTo(TextWriter tw)

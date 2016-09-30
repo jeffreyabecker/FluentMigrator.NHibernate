@@ -1,12 +1,24 @@
 ﻿{
-  "version": "1.0.0.7",
+  "version": "1.0.0.10",
 
   "dependencies": {
     "FluentMigrator": "1.6.2",
     "Newtonsoft.Json": "9.0.1",
     "NHibernate": "4.0.4.4000"
   },
+  "description": "A migrations generation framework / utilities for NHibernate utilizing FluentMigrator",
+  "title": "FluentMigrator.NHibernate",
+  "projectUrl": "https://github.com/jeffreyabecker/FluentMigrator.NHibernate",
 
+  "language": "C#",
+  "packOptions": {
+    "tags": [ "linq", "NHibernate", "migrations" ],
+    "summary": "A migrations generation framework / utilities for NHibernate utilizing FluentMigrator",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/jeffreyabecker/FluentMigrator.NHibernate"
+    }
+  },
   "frameworks": {
     "net461": {
       "frameworkAssemblies": {

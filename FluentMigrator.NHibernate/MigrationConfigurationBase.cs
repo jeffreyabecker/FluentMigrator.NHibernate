@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using FluentMigrator.Expressions;
+using FluentMigrator.NHibernate.Templates;
 using Newtonsoft.Json;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
@@ -33,7 +34,7 @@ namespace FluentMigrator.NHibernate
             var diff = new DifferentialMigation(@from, @to)
                 .Where(exp=>FilterExpressions(@from,@to,exp))
                 .ToList();
-            var tf = new TemplateFromExpressionFactory();
+            var tf = new CSharpTemplateFromExpressionFactory();
             var serializedConfiguration = SerializeConfiguration(diff);
             var version = GetVersion();
             var m = new Templates.CSharp.Migration

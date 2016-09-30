@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using FluentMigrator.Model;
 namespace FluentMigrator.NHibernate.Templates.CSharp
-{    public class DeleteForeignKeyExpressionTemplate
+{    internal class DeleteForeignKeyExpressionTemplate
         : ExpressionTemplate<FluentMigrator.Expressions.DeleteForeignKeyExpression>
     {
         public override void WriteTo(TextWriter tw)
