@@ -52,7 +52,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
             tw.Write("\t[Migration({0:00000000})]",Version);
             tw.WriteLine();
 
-            tw.WriteLine("\tinternal class "+Name+" : Migration");
+            tw.WriteLine("\tpublic class "+Name+" : Migration");
             tw.WriteLine("\t{");
             tw.WriteLine();
             tw.Write("\tpublic const string ConfigurationData = \"");
