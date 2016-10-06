@@ -108,7 +108,7 @@ namespace FluentMigrator.NHibernate
 
         public static List<MigrationExpressionBase> GetFromExpressionList(Assembly migrationsAssembly)
         {
-            var lastMigration = migrationsAssembly.ExportedTypes.Where(t => t.BaseType == typeof (Migration))
+            var lastMigration = migrationsAssembly.DefinedTypes.Where(t => t.BaseType == typeof (Migration))
                 .Where(s => HasConfigurationData(s))
                 .OrderBy(t => GetVersion(t))
                 .LastOrDefault();
