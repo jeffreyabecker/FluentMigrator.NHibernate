@@ -42,6 +42,10 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
                 tw.Write(",");
                 tw.Write(col.Precision);
                 tw.Write(")");
+            } 
+            else if (colType == DbType.Single)
+            {
+                tw.Write(".AsFloat()");
             }
             else if (colType == DbType.AnsiStringFixedLength)
             {
