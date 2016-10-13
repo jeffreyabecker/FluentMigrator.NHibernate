@@ -61,16 +61,6 @@ namespace FluentMigrator.NHibernate
                     Columns = GetTableColumns(table, mapping),
                     TableDescription = table.Comment
                 };
-                yield return new CreateConstraintExpression(ConstraintType.PrimaryKey)
-                {
-                    Constraint = new ConstraintDefinition(ConstraintType.PrimaryKey)
-                    {
-                        ConstraintName = "PK_" + table.Name,
-                        Columns = table.PrimaryKey.ColumnIterator.Select(c => c.Name).ToList(),
-                        SchemaName = table.Schema,
-                        TableName = table.Name
-                    }
-                };
                 foreach (var p in GetUniqueKeys(table)) yield return p;
 
             }
@@ -259,6 +249,10 @@ namespace FluentMigrator.NHibernate
         private string _defaultCatalog;
         private string _defaultSchema;
 
+        private bool IsPrimaryKey(Table table, Column c) {
+            return table.HasPrimaryKey && table.PrimaryKey.ColumnIterator.Any (x => x.Equals (c));
+        }
+
         private ColumnDefinition ColumnDefinition(Table table, IMapping mapping, Column c, int i)
         {
             var columnDefinition = new ColumnDefinition();
@@ -286,7 +280,7 @@ namespace FluentMigrator.NHibernate
             }
 
             columnDefinition.DefaultValue = c.DefaultValue;
-            columnDefinition.IsPrimaryKey = false;//IsPrimaryKey(c, table);
+            columnDefinition.IsPrimaryKey = IsPrimaryKey(table, c);
             columnDefinition.IsNullable = c.IsNullable;
             columnDefinition.IsUnique = c.IsUnique;
             columnDefinition.IsIdentity = i == 0 && table.IdentifierValue!= null && table.IdentifierValue.IsIdentityColumn(_dialect);
