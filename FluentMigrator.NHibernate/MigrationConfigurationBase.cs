@@ -17,8 +17,12 @@ namespace FluentMigrator.NHibernate
         protected string MigrationNamespace { get; set; }
         protected Assembly MigrationAssembly { get; set; }
 
+        protected virtual string ProjectRelativeMigrationsDirectory { get { return "Db\\Migrations\\"; } }
 
-
+        public virtual string GetTargetMigrationsFolder(string projectRoot)
+        {
+            return Path.Combine(projectRoot, (ProjectRelativeMigrationsDirectory ?? "").TrimStart('\\', '/'));
+        }
 
         protected virtual bool FilterExpressions(List<MigrationExpressionBase> @from, List<MigrationExpressionBase> @to,
             MigrationExpressionBase expression)

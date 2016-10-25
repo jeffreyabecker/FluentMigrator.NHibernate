@@ -1,0 +1,32 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "outputName": "dotnet-nh"
+  },
+
+  "dependencies": {
+    //"Microsoft.NETCore.App": {
+    //  "type": "platform",
+    //  "version": "1.0.1"
+    //},
+    "Microsoft.Extensions.CommandLineUtils": "1.0.0",
+    "Microsoft.DotNet.Cli.Utils": "1.0.0-*",
+    "FluentMigrator.NHibernate": "1.0.0.10"
+  },
+  "packOptions": {
+    "tags": [
+      "Nhibernate",
+      "Data",
+      "O/RM"
+    ],
+    "packageType": "DotnetCliTool"
+  },
+  "frameworks": {
+    "net461": {
+      "frameworkAssemblies": {
+        "System.Data": "4.0.0.0"
+      }
+    }
+  }
+}

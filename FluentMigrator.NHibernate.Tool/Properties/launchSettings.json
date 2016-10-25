@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FluentMigrator.NHibernate.Tool": {
+      "commandName": "Project",
+      "commandLineArgs": "init"
+    }
+  }
+}

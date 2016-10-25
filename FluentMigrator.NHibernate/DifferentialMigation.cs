@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 using FluentMigrator.Builders.Alter;
 using FluentMigrator.Expressions;
 using FluentMigrator.Model;
