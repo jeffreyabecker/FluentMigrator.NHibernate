@@ -281,6 +281,10 @@ namespace FluentMigrator.NHibernate
 
             columnDefinition.DefaultValue = c.DefaultValue;
             columnDefinition.IsPrimaryKey = IsPrimaryKey(table, c);
+            if (columnDefinition.IsPrimaryKey)
+            {
+                columnDefinition.PrimaryKeyName = "PK_" + columnDefinition.TableName;
+            }
             columnDefinition.IsNullable = c.IsNullable;
             columnDefinition.IsUnique = c.IsUnique;
             columnDefinition.IsIdentity = i == 0 && table.IdentifierValue!= null && table.IdentifierValue.IsIdentityColumn(_dialect);

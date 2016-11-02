@@ -26,7 +26,8 @@ namespace FluentMigrator.NHibernate.Templates
                 {typeof(DeleteSchemaExpression), e=>new DeleteSchemaExpressionTemplate {Expression = (DeleteSchemaExpression)e} },
                 {typeof(DeleteSequenceExpression),e=> new DeleteSequenceExpressionTemplate {Expression = (DeleteSequenceExpression)e} },
                 {typeof(DeleteConstraintExpression), e=>new DeleteConstraintExpressionTemplate {Expression = (DeleteConstraintExpression)e} },
-                {typeof(ExecuteSqlStatementExpression), e=>new ExecuteSqlStatementExpressionTemplate {Expression = (ExecuteSqlStatementExpression)e} }
+                {typeof(ExecuteSqlStatementExpression), e=>new ExecuteSqlStatementExpressionTemplate {Expression = (ExecuteSqlStatementExpression)e} },
+                {typeof(AlterColumnExpression), e=> new AlterColumnExpressionTemplate {Expression = (AlterColumnExpression)e } }
             };
             
         }

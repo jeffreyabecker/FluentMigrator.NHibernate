@@ -84,7 +84,15 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
             }
             if (col.IsPrimaryKey)
             {
-                tw.Write(".PrimaryKey()");
+
+                tw.Write(".PrimaryKey(");
+                if (!String.IsNullOrEmpty(col.PrimaryKeyName))
+                {
+                    tw.Write("\"");
+                    tw.Write(col.PrimaryKeyName);
+                    tw.Write("\"");
+                }
+                tw.Write(")");
             }
 
             if (!(col.DefaultValue is ColumnDefinition.UndefinedDefaultValue) && col.DefaultValue != null)

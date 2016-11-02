@@ -1,8 +1,10 @@
 {
   "profiles": {
     "FluentMigrator.NHibernate.Tool": {
-      "commandName": "Project",
-      "commandLineArgs": "init"
+      "commandName": "Project"
+    },
+    "Debug": {
+      "executablePath": ".\\bin\\Debug\\net461\\dotnet-nh.exe"
     }
   }
 }

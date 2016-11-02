@@ -1,16 +1,14 @@
 ﻿{
   "version": "1.0.0-*",
   "buildOptions": {
-    "emitEntryPoint": true,
-    "outputName": "dotnet-nh"
+    "emitEntryPoint": true
   },
 
   "dependencies": {
     "Microsoft.Extensions.CommandLineUtils": "1.0.0",
     "Microsoft.DotNet.Cli.Utils": "1.0.0-*",
-    "FluentMigrator.NHibernate": "1.0.0.10",
-    "Microsoft.Extensions.Logging": "1.0.0",
-    "Microsoft.Extensions.Logging.Console": "1.0.0"
+    "FluentMigrator.NHibernate": "1.0.0.10"
+
   },
   "packOptions": {
     "tags": [

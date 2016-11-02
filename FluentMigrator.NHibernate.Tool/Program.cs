@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.DotNet.Cli.Utils;
+using Microsoft.DotNet.ProjectModel;
+using System.Linq;
 using Microsoft.Extensions.CommandLineUtils;
 using NuGet.Frameworks;
 
@@ -6,80 +11,77 @@ namespace FluentMigrator.NHibernate.Tool
 {
     public class Program
     {
-        public Program(string[] args)
-        {
-            var app = new CommandLineApplication(false)
-            {
-                Name = "dotnet nh",
-                FullName = "NHibernate dotnet core cli commands"
-            };
-            Configure(app, this);
-            ResultCode = app.Execute(args);
-        }
-
-        public bool IsShowingInformation { get; set; }
-
-        public string Configuration { get; set; }
-
-        public string TargetProject { get; set; }
-        public int ResultCode { get; set; }
-
         public static int Main(string[] args)
         {
-            var p = new Program(args);
-            return p.ResultCode;
-        }
+            DebugHelper.HandleDebugSwitch(ref args);
 
-        public int Run()
-        {
-            if (IsShowingInformation) return 2;
+            var dotnetParams = new DotnetBaseParams("dotnet-dependency-tool-invoker", "DotNet Dependency Tool Invoker", "Invokes tools declared as NuGet dependencies of a project");
 
+            dotnetParams.Parse(args);
+
+            if (string.IsNullOrEmpty(dotnetParams.Command))
+            {
+                Console.WriteLine("A command name must be provided");
+
+                return 1;
+            }
+
+            var projectContexts =
+                CreateProjectContexts(dotnetParams.ProjectPath)
+                    .Where(p => dotnetParams.Framework == null ||
+                                dotnetParams.Framework.GetShortFolderName()
+                                .Equals(p.TargetFramework.GetShortFolderName()));
+
+            var commandFactory =
+                new ProjectDependenciesCommandFactory(
+                    dotnetParams.Framework,
+                    dotnetParams.Config,
+                    dotnetParams.Output,
+                    dotnetParams.BuildBasePath,
+                    projectContexts.First().ProjectDirectory);
+
+            foreach (var projectContext in projectContexts)
+            {
+                Console.WriteLine($"Invoking '{dotnetParams.Command}' for '{projectContext.TargetFramework}'.");
+
+                try
+                {
+                    var exitCode = commandFactory.Create(
+                            $"dotnet-{dotnetParams.Command}",
+                            dotnetParams.RemainingArguments,
+                            projectContext.TargetFramework,
+                            dotnetParams.Config)
+                        .ForwardStdErr()
+                        .ForwardStdOut()
+                        .Execute()
+                        .ExitCode;
+
+                    Console.WriteLine($"Command returned {exitCode}");
+                }
+                catch (CommandUnknownException)
+                {
+                    Console.WriteLine($"Command not found");
+                    return 1;
+                }
+            }
             return 0;
         }
 
-        private static void Configure(CommandLineApplication app, Program options)
+        private static IEnumerable<ProjectContext> CreateProjectContexts(string projectPath = null)
         {
-            var project = app.Option(
-                "-p|--project <project>",
-                "The target project, defaults to current directory.", CommandOptionType.SingleValue);
+            projectPath = projectPath ?? Directory.GetCurrentDirectory();
 
-            var configuration = app.Option("-c|--configuration",
-                "The MigrationConfigurationBase or IMigrataionConfiguration instance to load.",
-                CommandOptionType.SingleValue);
-            var framework = app.Option(
-                "-f|--framework <framework>",
-                $"Target framework to load from the startup project (defaults to the framework most compatible with {FrameworkConstants.CommonFrameworks.NetCoreApp10}).",
-                CommandOptionType.SingleValue);
-            var output = app.Option(
-                "-o|--output <output_dir>",
-                "Directory in which to find outputs", CommandOptionType.SingleValue);
-            var noBuild = app.Option("--no-build", "Do not build before executing.", CommandOptionType.NoValue);
-            var verbose = app.Option("--verbose", "Show verbose output", CommandOptionType.NoValue);
-            app.OnExecute(() =>
+            if (!projectPath.EndsWith(Project.FileName))
             {
-                options.TargetProject = project.Value();
-                options.IsShowingInformation = app.IsShowingInformation;
-                options.Configuration = configuration.Value();
-                options.Framework = framework.HasValue()
-                                        ? NuGetFramework.Parse(framework.Value())
-                                        : null;
-                options.BuildOutputPath = output.Value();
-                options.NoBuild = noBuild.HasValue();
-                options.IsVerbose = verbose.HasValue();
-                options.RemainingArguments = app.RemainingArguments;
+                projectPath = Path.Combine(projectPath, Project.FileName);
+            }
 
-                return options.Run();
-            });
+            if (!File.Exists(projectPath))
+            {
+                throw new InvalidOperationException($"{projectPath} does not exist.");
+            }
+
+            return ProjectContext.CreateContextForEachFramework(projectPath);
         }
-
-        public List<string> RemainingArguments { get; set; }
-
-        public bool IsVerbose { get; set; }
-
-        public bool NoBuild { get; set; }
-
-        public string BuildOutputPath { get; set; }
-
-        public NuGetFramework Framework { get; set; }
     }
 }

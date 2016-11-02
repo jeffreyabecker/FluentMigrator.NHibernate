@@ -16,9 +16,7 @@ tw.Write("\")\r\n       ");
 if(!String.IsNullOrEmpty(Expression.SchemaName)){tw.Write(".InSchema(\"");
 tw.Write(Expression.SchemaName);
 tw.Write("\")");
-}tw.Write("\r\n\t   .AlterColumn(\"");
-tw.Write(Expression.Column.Name);
-tw.Write("\")\r\n\t   ");
+}
 new ColumnDefinitionTemplate{Expression = Expression.Column}.WriteTo(tw);        }
     }
 }
