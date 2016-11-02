@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0.11",
+  "version": "1.0.0.12",
 
   "dependencies": {
     "FluentMigrator": "1.6.2",

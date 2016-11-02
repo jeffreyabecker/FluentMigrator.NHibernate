@@ -39,7 +39,7 @@ namespace FluentMigrator.NHibernate
                 .Where(exp=>FilterExpressions(@from,@to,exp))
                 .ToList();
             var tf = new CSharpTemplateFromExpressionFactory();
-            var serializedConfiguration = SerializeConfiguration(diff);
+            var serializedConfiguration = SerializeConfiguration(@to);
             var version = GetVersion();
             var m = new Templates.CSharp.Migration
             {
