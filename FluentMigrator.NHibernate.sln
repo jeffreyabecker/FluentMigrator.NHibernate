@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-nh", "dotnet-nh\dotn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{E5A53CC6-99EE-4EE5-8E1F-3E0B180056D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{BF541095-0DFB-4235-A9D7-3408D0DA7A33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E5A53CC6-99EE-4EE5-8E1F-3E0B180056D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5A53CC6-99EE-4EE5-8E1F-3E0B180056D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5A53CC6-99EE-4EE5-8E1F-3E0B180056D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF541095-0DFB-4235-A9D7-3408D0DA7A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF541095-0DFB-4235-A9D7-3408D0DA7A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF541095-0DFB-4235-A9D7-3408D0DA7A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF541095-0DFB-4235-A9D7-3408D0DA7A33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
