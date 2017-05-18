@@ -31,7 +31,7 @@ namespace FluentMigrator.NHibernate
             return true;
         }
 
-        public void Generate(string name, string outputDirectory)
+        public virtual GeneratedMigration Generate(string name, string outputDirectory)
         {
             var @from = GetFromExpressions();
             var @to = GetToExpressions();
@@ -50,12 +50,19 @@ namespace FluentMigrator.NHibernate
                 TemplateFactory = tf,
                 Version = version
             };
-            var fileName = Path.Combine(outputDirectory, $"{version:00000000}_{name}.cs");
-            using (var fs = new StreamWriter(fileName))
+            using (var sw = new StringWriter())
             {
-                m.WriteTo(fs);
-                fs.Flush();
+                m.WriteTo(sw);
+                sw.Flush();
+                var result = new GeneratedMigration
+                {
+                    Code = sw.GetStringBuilder().ToString(),
+                    Name = name,
+                    Version = version,
+                };
+                return result;
             }
+
         }
 
         protected virtual long GetVersion()

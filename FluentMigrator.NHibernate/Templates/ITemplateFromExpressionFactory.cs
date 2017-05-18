@@ -2,7 +2,7 @@ using FluentMigrator.Expressions;
 
 namespace FluentMigrator.NHibernate.Templates
 {
-    internal interface ITemplateFromExpressionFactory
+    public interface ITemplateFromExpressionFactory
     {
         ITemplate GetTemplate(MigrationExpressionBase expr);
     }

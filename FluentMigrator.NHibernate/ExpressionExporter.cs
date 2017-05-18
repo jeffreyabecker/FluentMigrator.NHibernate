@@ -41,7 +41,12 @@ namespace FluentMigrator.NHibernate
                 .Select(g => g.First())
                 .Where(t => t.IsPhysicalTable)
                 .ToList();
-            var schemas = tables.Select(x => x.Schema).Where(s => !String.IsNullOrEmpty(s)).Distinct().ToList();
+            var collectionTables = _cfg.CollectionMappings.Select(c => c.CollectionTable)
+                .Where(t => !tables.Contains(t)).ToList();
+            tables = tables.Concat(collectionTables).ToList();
+            var schemas = tables.Select(x => x.Schema)
+                .Concat(collectionTables.Select(t=>t.Schema))
+                .Where(s => !String.IsNullOrEmpty(s)).Distinct().ToList();
             foreach (var schema in schemas)
             {
                 yield return new CreateSchemaExpression

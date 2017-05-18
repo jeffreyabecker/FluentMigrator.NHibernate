@@ -2,7 +2,7 @@
 
 namespace FluentMigrator.NHibernate.Templates
 {
-    internal interface ITemplate
+    public interface ITemplate
     {
         void WriteTo(TextWriter tw);
     }

@@ -32,7 +32,7 @@ namespace XUnitTestProject1
                 Properties["format_sql"] = "true";
                 //This will get overwritten by the configuration system
                 Properties["connection.connection_string"] =
-                    "Data Source=(local);Database=CoordinatePA;Integrated Security=True;Application Name=CoordinatePA;Type System Version=SQL Server 2012";
+                    "Data Source=(local);Database=nhibernate;Integrated Security=True;";
                 var mm = new ModelMapper();
                 mm.AddMapping(typeof(ExampleMapping));
                 AddDeserializedMapping(mm.CompileMappingForAllExplicitlyAddedEntities(),"example.hbm.xml");

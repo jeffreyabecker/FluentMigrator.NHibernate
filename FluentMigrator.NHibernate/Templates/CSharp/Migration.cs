@@ -7,9 +7,17 @@ using FluentMigrator.Expressions;
 namespace FluentMigrator.NHibernate.Templates.CSharp
 {
 
+    public interface IMigration : ITemplate
+    {
+        string Namespace { get; set; }
+        string Name { get; set; }
+        long Version { get; set; }
+        IEnumerable<MigrationExpressionBase> Expressions { get; set; }
+        ITemplateFromExpressionFactory TemplateFactory { get; set; }
+        string SerializedConfiguration { get; set; }
+    }
 
-
-    internal  class Migration : ITemplate
+    internal  class Migration : ITemplate, IMigration
     {
 
         public virtual string Namespace { get; set; }
