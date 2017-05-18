@@ -4,7 +4,7 @@
     <Description>A migrations generation framework / utilities for NHibernate utilizing FluentMigrator</Description>
     <AssemblyTitle>FluentMigrator.NHibernate</AssemblyTitle>
     <NeutralLanguage>C#</NeutralLanguage>
-    <VersionPrefix>1.0.0.15</VersionPrefix>
+    <VersionPrefix>1.0.0.16</VersionPrefix>
     <TargetFramework>net461</TargetFramework>
     <AssemblyName>FluentMigrator.NHibernate</AssemblyName>
     <PackageId>FluentMigrator.NHibernate</PackageId>

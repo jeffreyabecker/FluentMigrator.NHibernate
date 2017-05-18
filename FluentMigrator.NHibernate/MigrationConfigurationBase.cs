@@ -31,7 +31,7 @@ namespace FluentMigrator.NHibernate
             return true;
         }
 
-        public virtual GeneratedMigration Generate(string name, string outputDirectory)
+        public virtual GeneratedMigration Generate(string name)
         {
             var @from = GetFromExpressions();
             var @to = GetToExpressions();
