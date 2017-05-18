@@ -8,6 +8,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
     {
         public override void WriteTo(TextWriter tw)
         {
+            throw new NotImplementedException("FluentMigrator.Expressions.AlterSchemaExpression");
         }
     }
 }

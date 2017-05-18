@@ -12,13 +12,19 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
         {
             tw.Write("\r\n");
 
-            var col = Expression;
-            var colType = Expression.Type;
+            var columnDefinition = Expression;
+            WriteColumnValue(tw, columnDefinition);
+        }
 
-            if ( !String.IsNullOrWhiteSpace(col.CustomType))
+        public static void WriteColumnValue(TextWriter tw, ColumnDefinition columnDefinition)
+        {
+            var col = columnDefinition;
+            var colType = columnDefinition.Type;
+
+            if (!String.IsNullOrWhiteSpace(col.CustomType))
             {
                 tw.Write(".AsCustom(\"");
-                tw.Write(Expression.CustomType);
+                tw.Write(columnDefinition.CustomType);
                 tw.Write("\")");
             }
             else if (colType == DbType.AnsiString || colType == DbType.Binary || colType == DbType.Xml ||
@@ -27,8 +33,14 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
                 tw.Write(".As");
                 tw.Write(colType.ToString());
                 tw.Write("(");
-                if (col.Size == Int32.MaxValue) { tw.Write("Int32.MaxValue");}
-                else { tw.Write(col.Size);}
+                if (col.Size == Int32.MaxValue)
+                {
+                    tw.Write("Int32.MaxValue");
+                }
+                else
+                {
+                    tw.Write(col.Size);
+                }
                 tw.Write(")");
             }
             else if (colType == DbType.Decimal && col.Size == 0)
@@ -42,7 +54,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
                 tw.Write(",");
                 tw.Write(col.Precision);
                 tw.Write(")");
-            } 
+            }
             else if (colType == DbType.Single)
             {
                 tw.Write(".AsFloat()");
@@ -84,7 +96,6 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
             }
             if (col.IsPrimaryKey)
             {
-
                 tw.Write(".PrimaryKey(");
                 if (!String.IsNullOrEmpty(col.PrimaryKeyName))
                 {
