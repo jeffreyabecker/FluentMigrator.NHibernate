@@ -40,8 +40,8 @@ namespace FluentMigrator.NHibernate
                 .Concat(GetRemovedTables())
                 .Concat(GetRemovedSequences())
                 .Concat(GetNewIndexes())
-                
-                .Concat(GetRemovedSchemas())
+                .Concat(GetNewForeignKeys())
+				.Concat(GetRemovedSchemas())
                 .Concat(GetAuxObjects())
 
                 .GetEnumerator();
@@ -177,7 +177,15 @@ namespace FluentMigrator.NHibernate
                 .Cast<MigrationExpressionBase>();
         }
 
-        private IEnumerable<MigrationExpressionBase> GetRemovedSchemas()
+		private IEnumerable<MigrationExpressionBase> GetNewForeignKeys()
+		{
+			var fromFks = _fromSchema.OfType<CreateForeignKeyExpression>().ToList();
+			var toFks = _toSchema.OfType<CreateForeignKeyExpression>().ToList();
+			return toFks.Where(tf => !fromFks.Any(ff => AreSameFk(ff.ForeignKey, tf.ForeignKey)))
+				.Cast<MigrationExpressionBase>();
+		}
+
+		private IEnumerable<MigrationExpressionBase> GetRemovedSchemas()
         {
             var fromSchemata = _fromSchema.OfType<CreateSchemaExpression>().ToList();
             var toSchemata = _toSchema.OfType<CreateSchemaExpression>().ToList();
