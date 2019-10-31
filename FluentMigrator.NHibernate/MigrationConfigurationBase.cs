@@ -35,7 +35,7 @@ namespace FluentMigrator.NHibernate
         {
             var @from = GetFromExpressions();
             var @to = GetToExpressions();
-            var diff = new DifferentialMigation(@from, @to)
+            var diff = new DifferentialMigration(@from, @to)
                 .Where(exp=>FilterExpressions(@from,@to,exp))
                 .ToList();
             var tf = new CSharpTemplateFromExpressionFactory();
