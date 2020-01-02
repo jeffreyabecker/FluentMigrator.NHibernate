@@ -17,7 +17,7 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
             if (!String.IsNullOrWhiteSpace(Expression.SchemaName))
             {
                 tw.Write(".InSchema(\"");
-                tw.Write(Expression.TableName);
+                tw.Write(Expression.SchemaName);
                 tw.Write("\")");
             }
             ColumnDefinitionTemplate.WriteColumnValue(tw, Expression.Column);

@@ -13,13 +13,13 @@ namespace FluentMigrator.NHibernate.Templates.CSharp
                 tw.Write("\"");
                 tw.Write(cn);
                 tw.Write("\")");
-                tw.Write(".OnTable(\"");
+                tw.Write(".FromTable(\"");
                 tw.Write(Expression.TableName);
                 tw.Write("\")");
                 if (!String.IsNullOrWhiteSpace(Expression.SchemaName))
                 {
                     tw.Write(".InSchema(\"");
-                    tw.Write(Expression.TableName);
+                    tw.Write(Expression.SchemaName);
                     tw.Write("\")");
                 }
             }
