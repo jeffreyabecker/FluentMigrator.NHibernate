@@ -11,13 +11,13 @@ using NHibernate.Dialect;
 
 namespace FluentMigrator.NHibernate
 {
-    public class DifferentialMigation :  IEnumerable<MigrationExpressionBase>
+    public class DifferentialMigration :  IEnumerable<MigrationExpressionBase>
     {
         private readonly List<MigrationExpressionBase> _fromSchema;
         private readonly List<MigrationExpressionBase> _toSchema;
 
 
-        public DifferentialMigation(List<MigrationExpressionBase> fromSchema, List<MigrationExpressionBase> toSchema)
+        public DifferentialMigration(List<MigrationExpressionBase> fromSchema, List<MigrationExpressionBase> toSchema)
         {
             _fromSchema = fromSchema;
             _toSchema = toSchema;
@@ -40,8 +40,8 @@ namespace FluentMigrator.NHibernate
                 .Concat(GetRemovedTables())
                 .Concat(GetRemovedSequences())
                 .Concat(GetNewIndexes())
-                
-                .Concat(GetRemovedSchemas())
+                .Concat(GetNewForeignKeys())
+				.Concat(GetRemovedSchemas())
                 .Concat(GetAuxObjects())
 
                 .GetEnumerator();
@@ -177,7 +177,15 @@ namespace FluentMigrator.NHibernate
                 .Cast<MigrationExpressionBase>();
         }
 
-        private IEnumerable<MigrationExpressionBase> GetRemovedSchemas()
+		private IEnumerable<MigrationExpressionBase> GetNewForeignKeys()
+		{
+			var fromFks = _fromSchema.OfType<CreateForeignKeyExpression>().ToList();
+			var toFks = _toSchema.OfType<CreateForeignKeyExpression>().ToList();
+			return toFks.Where(tf => !fromFks.Any(ff => AreSameFk(ff.ForeignKey, tf.ForeignKey)))
+				.Cast<MigrationExpressionBase>();
+		}
+
+		private IEnumerable<MigrationExpressionBase> GetRemovedSchemas()
         {
             var fromSchemata = _fromSchema.OfType<CreateSchemaExpression>().ToList();
             var toSchemata = _toSchema.OfType<CreateSchemaExpression>().ToList();
@@ -246,16 +254,16 @@ namespace FluentMigrator.NHibernate
 
         }
 
-        private bool MatchIncludes(ICollection<IndexIncludeDefinition> fromIx, ICollection<IndexIncludeDefinition> toIx)
-        {
-            return MatchCollection(fromIx, toIx, (a, b) => a.Name == b.Name);
-        }
+        //private bool MatchIncludes(ICollection<IndexIncludeDefinition> fromIx, ICollection<IndexIncludeDefinition> toIx)
+        //{
+        //    return MatchCollection(fromIx, toIx, (a, b) => a.Name == b.Name);
+        //}
 
         private bool AreSameIndexName(IndexDefinition fromIx, IndexDefinition toIx)
         {
             return fromIx.SchemaName == toIx.SchemaName && fromIx.TableName == toIx.TableName
                    && fromIx.IsClustered == toIx.IsClustered && fromIx.IsUnique == toIx.IsUnique
-                   && MatchIndexColumns(fromIx.Columns, toIx.Columns) && MatchIncludes(fromIx.Includes, toIx.Includes);
+                   && MatchIndexColumns(fromIx.Columns, toIx.Columns) /*&& MatchIncludes(fromIx.Includes, toIx.Includes)*/;
         }
         private IEnumerable<MigrationExpressionBase> GetAlters(CreateTableExpression from, CreateTableExpression to)
         {
